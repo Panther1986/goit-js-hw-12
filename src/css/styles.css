@@ -150,3 +150,26 @@ letter-spacing: 0.04em;
         transform: rotate(360deg)
     }
 }
+
+
+.btn-primary {
+    height: 40px;
+    display: flex;
+padding: 8px 16px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 8px;
+background-color: #4E75FF;
+border: none;
+}
+
+.label {
+    color: #FFF;
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 1.5; 
+letter-spacing: 0.04em;
+}
