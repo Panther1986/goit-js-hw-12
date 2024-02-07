@@ -18,7 +18,7 @@ const galerryApiService = new GalerryApiService();
 const showLoader = () => {
   const loader = document.createElement('span');
   loader.classList.add('loader');
-  divElem.append(loader);
+  loadMoreBtn.append(loader);
 }
 
 const hideLoader = () => {
@@ -33,18 +33,56 @@ loadMoreBtn.addEventListener('click', onLoadMore);
 
 
 function onSearch(e) {
-    showLoader();
-    imagesContainer.innerHTML = "";
-    e.preventDefault();
-    galerryApiService.userQuery = e.currentTarget.elements.searchQuery.value;
-
-    galerryApiService.fetchArticles();
+  showLoader();
+  imagesContainer.innerHTML = "";
+  e.preventDefault();
+  clearGallery();
+  galerryApiService.userQuery = e.currentTarget.elements.
+      searchQuery.value;
+  if (galerryApiService.userQuery.trim() === '') {
+    iziToast.error({
+                message: 'Sorry, there are no images matching your search query. Please try again!',
+                position: 'topLeft',
+                transitionIn: "fadeInLeft",
+            });
+            hideLoader()
+  }
+  galerryApiService.resetPage();
+  
+  galerryApiService.fetchArticles().then(function (response) {
+    appendGallery(response);
+  });
+    
 }
 
 function onLoadMore() {
-galerryApiService.fetchArticles();
+galerryApiService.fetchArticles().then(function (response) {
+    appendGallery(response);
+  });
 }
 
+function generateMarkupGalerry(response) {
+  return response.hits.map((response) => {
+  return `
+            <li class="gallery-item"><a href="${response.largeImageURL}">
+          <img class="gallery-image" src="${response.webformatURL}" alt="${response.tags}"></a>
+          <p>Likes: ${response.likes}</p>
+          <p>Views: ${response.views}</p>
+          <p>Comments: ${response.comments}</p>
+          <p>Downloads: ${response.downloads}</p>
+          </li>`;
+  }).join('');
+ 
+}
+
+function appendGallery(response) {
+  imagesContainer.insertAdjacentHTML('beforeend', generateMarkupGalerry(response));
+}
+
+function clearGallery() {
+  imagesContainer.innerHTML = '';
+}
+ 
 
 
 
@@ -57,3 +95,4 @@ const options = {
   captionSelector: "img",
   captionDelay: 250,
 };
+

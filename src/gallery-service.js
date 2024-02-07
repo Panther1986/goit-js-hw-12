@@ -1,3 +1,7 @@
+const API_KEY = '42127236-8bfdbbfbeed8a2dadaca720e8';
+const BASE_URL = 'https://pixabay.com/api/';
+
+
 export default class GalerryApiService {
     constructor() {
         this.userQuery = '';
@@ -5,19 +9,24 @@ export default class GalerryApiService {
 
     }
 
-    fetchArticles() {
-        console.log(this);
-        const API_KEY = '42127236-8bfdbbfbeed8a2dadaca720e8';
-
-    axios.get(`https://pixabay.com/api/?key=${API_KEY}&q=${this.userQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=15`)
-        .then(function (response) {
-            console.log(response.data.hits);
-            this.page += 1;
-        })
+    async fetchArticles() {
         
-        .catch(function (error) {
-        console.log(error);
-    })
+       const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.userQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=15`);
+
+        this.incrementPage();
+
+        return response.data;
+       
+
+
+    }
+
+    incrementPage() {
+        this.page += 1;
+    }
+
+    resetPage() {
+        this.page = 1;
     }
 
     get query() {
