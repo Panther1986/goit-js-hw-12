@@ -12,6 +12,7 @@ const imagesContainer = document.querySelector('.gallery');
 const divElem = document.querySelector('div');
 const loadMoreBtn = document.querySelector('[data-action="load-more"]');
 
+
 const galerryApiService = new GalerryApiService();
 
 
@@ -46,7 +47,8 @@ function onSearch(e) {
                 transitionIn: "fadeInLeft",
             });
             hideLoader()
-  }
+  };
+  showLoadMoreBtn();
   galerryApiService.resetPage();
   
   galerryApiService.fetchArticles().then(function (response) {
@@ -60,6 +62,11 @@ galerryApiService.fetchArticles().then(function (response) {
     appendGallery(response);
   });
 }
+
+function showLoadMoreBtn() {
+  loadMoreBtn.classList.remove('is-hidden');
+}
+
 
 function generateMarkupGalerry(response) {
   return response.hits.map((response) => {
@@ -77,15 +84,20 @@ function generateMarkupGalerry(response) {
 
 function appendGallery(response) {
   imagesContainer.insertAdjacentHTML('beforeend', generateMarkupGalerry(response));
+
+  const lightbox = new SimpleLightbox('.gallery a', options);
+      lightbox.on('show.simplelightbox');
+      lightbox.refresh();
+  formElem.reset();
+  hideLoader();
+      
+    
 }
 
 function clearGallery() {
   imagesContainer.innerHTML = '';
 }
  
-
-
-
 
 const options = {
   captions: true,

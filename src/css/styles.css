@@ -151,6 +151,13 @@ letter-spacing: 0.04em;
     }
 }
 
+.btn-primary.is-hidden {
+    display: none;
+}
+
+.btn-primary > .loader.is-hidden {
+display: none;
+}
 
 
 .btn-primary {
@@ -163,6 +170,8 @@ gap: 10px;
 border-radius: 8px;
 background-color: #4E75FF;
 border: none;
+
+cursor: pointer;
 }
 
 .label {
