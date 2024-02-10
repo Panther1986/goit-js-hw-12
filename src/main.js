@@ -61,7 +61,6 @@ function onSearch(e) {
           transitionIn: "fadeInLeft",
       });
       loadMoreBtn.classList.add('is-hidden');
-      hideLoader();
     }
   })
     .catch(function (error) {
