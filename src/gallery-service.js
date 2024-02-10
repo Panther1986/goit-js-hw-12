@@ -16,8 +16,6 @@ export default class GalerryApiService {
         this.incrementPage();
 
         return response.data;
-       
-
 
     }
 
