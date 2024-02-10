@@ -60,6 +60,7 @@ function onSearch(e) {
           position: 'topLeft',
           transitionIn: "fadeInLeft",
       });
+      loadMoreBtn.classList.add('is-hidden');
       hideLoader();
     }
   })
