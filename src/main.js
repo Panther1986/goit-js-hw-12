@@ -46,7 +46,8 @@ function onSearch(e) {
                 position: 'topLeft',
                 transitionIn: "fadeInLeft",
             });
-            hideLoader()
+    hideLoader()
+    return;
   };
   showLoadMoreBtn();
   galerryApiService.resetPage();
